@@ -8,7 +8,6 @@ const app = express();
 const PORT = process.env.PORT || 9000;
 
 app.get("/", async (req,res)=> {
-    res.send("Hello there! Api is working")
 
     const imageUrl = 'https://www.shutterstock.com/image-vector/coming-soon-on-dark-background-600nw-2364512887.jpg';
 
