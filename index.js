@@ -7,8 +7,26 @@ const app = express();
 
 const PORT = process.env.PORT || 9000;
 
-app.get("/", (req,res)=> {
+app.get("/", async (req,res)=> {
     res.send("Hello there! Api is working")
+
+    const imageUrl = 'https://www.shutterstock.com/image-vector/coming-soon-on-dark-background-600nw-2364512887.jpg';
+
+    try {
+      const response = await axios.get(imageUrl, { responseType: 'arraybuffer' });
+      const imgBase64 = Buffer.from(response.data, 'binary').toString('base64');
+
+      res.send(`
+        <html>
+          <body style="color=black">
+            <img style="height=50vh;width=50vh" src="data:image/jpeg;base64,${imgBase64}" alt="404 Not Found" />
+          </body>
+        </html>
+      `);
+    } catch (error) {
+      console.error('Error fetching the image:', error);
+      res.status(500).send('Error fetching the image.');
+    }
 })
 
 app.get('/image', async (req, res) => {
